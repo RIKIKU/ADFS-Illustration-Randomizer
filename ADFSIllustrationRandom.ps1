@@ -49,5 +49,5 @@ $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FileFilter"
 
 $files = dir -Path $($BaseFolders.FolderPath)
 $sample = $files | Get-Random -Count 1
-$sample
-#Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose
+
+Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

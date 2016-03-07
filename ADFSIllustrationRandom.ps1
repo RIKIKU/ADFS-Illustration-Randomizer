@@ -1,8 +1,16 @@
 ﻿#params
-$CSVFile = ".\Folders.csv"
+$CSVFile = ".\Folders.csv" #what if this doesnt exits? 
 $FileFilter = "ADFS-*.png"
 
-$BaseFolders = Import-Csv $CSVFile
+try
+{
+    $BaseFolders = Import-Csv $CSVFile
+}
+catch [System.IO.FileNotFoundException],[System.Management.Automation.ParameterBindingException]
+{
+    $Error.clear()
+}
+
 if($BaseFolders.count -ge 1){
     $BaseFolders | ForEach-Object{
         #DateConversion
@@ -36,11 +44,10 @@ if($BaseFolders.count -ge 1){
     }
 }
 
-#if no folders configured, use the base script folder.
+#if no folders, use the script operating folder.
 else
 {
     $BaseFolders = [PSCustomObject]@{FolderPath = "."}
-
 }
 
 
@@ -50,4 +57,5 @@ $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FileFilter"
 $files = dir -Path $($BaseFolders.FolderPath)
 $sample = $files | Get-Random -Count 1
 
-Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose
+$sample
+#Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

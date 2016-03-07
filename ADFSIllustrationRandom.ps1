@@ -1,7 +1,28 @@
-﻿#params
-$CSVFile = ".\Folders.csv" #what if this doesnt exits? 
-$FileFilter = "ADFS-*.png"
+﻿<#
+    Put the license here.
+#>
+<#
+    To use this file you will need to set the file filter so that the script can pick up the images that you want to display as your Illustration
+    in the ADFS login page. If you specify nothing,then everything will be picked up. Including this ps1 file, which is obviously not an image.
+    This is simply calling the get-childitem cmdlet and appending whatever is in the file filter to the end of the path. 
 
+    .Using a CSV File:
+    The CSV File can be used to specify folders where you might have themed backgrounds. For example: if you have Christmas themed backgrounds and want
+    to show them between Nov and Dec and Easter themed backgrounds or, <insert country> day, what ever. You can specify as many folders as you like, 
+    you can even specify folders that have overlapping date ranges. If you do have folders that overlap, one folder is chosen at random.
+
+    .Not Using a CSV File:
+    The script will try and load the specified file, if it fails to find the file, or the file was never specified, it will just use
+    its default behaviour which is to look for images according to the FileFilter in the running directory of the script. 
+#>
+
+#params
+$FileFilter = "ADFS-*.png"
+$CSVFile = ".\Folders.csv" 
+
+
+# Dont Edit Below This Line.
+#-----------------------------------------------------------------------------------------------------------
 try
 {
     $BaseFolders = Import-Csv $CSVFile
@@ -9,6 +30,8 @@ try
 catch [System.IO.FileNotFoundException],[System.Management.Automation.ParameterBindingException]
 {
     $Error.clear()
+    #Enables the default behaviour if  a CSV file is not found.
+    #The two types of errors that will get caught here are thrown when the path is not specified or the csv file is not found.
 }
 
 if($BaseFolders.count -ge 1){
@@ -54,8 +77,7 @@ else
 #By now there should only be one folder.
 $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FileFilter"
 
-$files = dir -Path $($BaseFolders.FolderPath)
+$files = get-childitem -Path $($BaseFolders.FolderPath)
 $sample = $files | Get-Random -Count 1
 
-$sample
-#Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose
+Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

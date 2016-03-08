@@ -12,6 +12,9 @@
     .Not Using a CSV File:
     The script will try and load the specified file, if it fails to find the file, or the file was never specified, it will just use
     its default behaviour which is to look for images according to the FileFilter in the running directory of the script. 
+
+    .More Info:
+    To find out more about how this thing should be used, check out the wiki at https://github.com/RIKIKU/ADFS-Illustration-Randomizer-/wiki
 #>
 
 #params
@@ -19,8 +22,8 @@ $FileFilter = "ADFS-*.png"
 $CSVFile = ".\Folders.csv" 
 
 
-# Dont Edit Below This Line.
-#-----------------------------------------------------------------------------------------------------------
+# You don't need to edit below this line.
+#------------------------------------------
 try
 {
     $BaseFolders = Import-Csv $CSVFile

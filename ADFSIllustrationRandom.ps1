@@ -1,7 +1,5 @@
 ﻿<#
-    Put the license here.
-#>
-<#
+    .How To use:
     To use this file you will need to set the file filter so that the script can pick up the images that you want to display as your Illustration
     in the ADFS login page. If you specify nothing,then everything will be picked up. Including this ps1 file, which is obviously not an image.
     This is simply calling the get-childitem cmdlet and appending whatever is in the file filter to the end of the path. 

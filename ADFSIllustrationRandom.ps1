@@ -77,9 +77,9 @@ else
 
 
 #By now there should only be one folder.
-$BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FileFilter"
+$BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FilePathSuffix"
 
-$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt -File #what the hell?
+$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt  -File
 $sample = $files | Get-Random -Count 1
 $sample
 #Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

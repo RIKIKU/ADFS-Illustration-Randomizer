@@ -14,11 +14,12 @@
     its default behaviour which is to look for images according to the FileFilter in the running directory of the script. 
 
     .More Info:
-    To find out more about how this thing should be used, check out the wiki at https://github.com/RIKIKU/ADFS-Illustration-Randomizer-/wiki
+    To find out more about how this thing should be used, check out the wiki at https://github.com/RIKIKU/ADFS-Illustration-Randomizer/wiki
 #>
 
 #params
-$FileFilter = "ADFS-*.png"
+$FilePathSuffix = "*"
+$Include = ''
 $CSVFile = ".\Folders.csv" 
 
 
@@ -78,7 +79,7 @@ else
 #By now there should only be one folder.
 $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FileFilter"
 
-$files = get-childitem -Path $($BaseFolders.FolderPath)
+$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt -File #what the hell?
 $sample = $files | Get-Random -Count 1
-
-Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose
+$sample
+#Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

@@ -18,10 +18,10 @@
 #>
 
 #params
-$FilePathSuffix = "*"
-$Include = ''
-$CSVFile = ".\Folders.csv" 
+[String[]]$Include = "" #what files should be brought back? E.g. "*.png","*.jpg"ect...
+[String]$CSVFile = ".\Folders.csv" 
 
+[String]$FilePathSuffix = "*" #note: this should be left as is. The Include parameter should be used to filter files out. 
 
 # You don't need to edit below this line.
 #------------------------------------------
@@ -79,7 +79,6 @@ else
 #By now there should only be one folder.
 $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FilePathSuffix"
 
-$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt  -File
+$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt,LICENSE,*.md  -File
 $sample = $files | Get-Random -Count 1
-$sample
-#Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose
+Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

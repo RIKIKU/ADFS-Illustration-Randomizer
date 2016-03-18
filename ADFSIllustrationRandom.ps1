@@ -20,11 +20,12 @@
 #params
 [String[]]$Include = "" #what files should be brought back? E.g. "*.png","*.jpg"ect...
 [String]$CSVFile = ".\Folders.csv" 
-
+[string[]]$Exclude = "*.ps1","*.txt","LICENSE","*.md","*.csv"
 [String]$FilePathSuffix = "*" #note: this should be left as is. The Include parameter should be used to filter files out. 
 
 # You don't need to edit below this line.
 #------------------------------------------
+Push-Location $PSScriptRoot
 try
 {
     $BaseFolders = Import-Csv $CSVFile
@@ -36,7 +37,7 @@ catch [System.IO.FileNotFoundException],[System.Management.Automation.ParameterB
     #The two types of errors that will get caught here are thrown when the path is not specified or the csv file is not found.
 }
 
-if($BaseFolders.count -ge 1){
+if($BaseFolders.FolderPath.count -ge 1){
     $BaseFolders | ForEach-Object{
         #DateConversion
         try
@@ -79,6 +80,6 @@ else
 #By now there should only be one folder.
 $BaseFolders.FolderPath = $BaseFolders.FolderPath + "\$FilePathSuffix"
 
-$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude *.ps1,*.txt,LICENSE,*.md  -File
+$files = get-childitem -Path $($BaseFolders.FolderPath) -Exclude $Exclude  -File
 $sample = $files | Get-Random -Count 1
 Set-AdfsWebTheme -TargetName default -Illustration @{path=$sample.FullName} -Verbose

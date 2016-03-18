@@ -37,7 +37,7 @@ catch [System.IO.FileNotFoundException],[System.Management.Automation.ParameterB
     #The two types of errors that will get caught here are thrown when the path is not specified or the csv file is not found.
 }
 
-if($BaseFolders.count -ge 1){
+if($BaseFolders.FolderPath.count -ge 1){
     $BaseFolders | ForEach-Object{
         #DateConversion
         try

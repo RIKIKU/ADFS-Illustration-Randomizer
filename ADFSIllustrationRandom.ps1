@@ -68,6 +68,10 @@ if($BaseFolders.FolderPath.count -ge 1){
     {
         $BaseFolders = $BaseFolders | Get-Random -Count 1
     }
+    elseif($($BaseFolders.Count) -eq 0)
+    {
+        $BaseFolders = [PSCustomObject]@{FolderPath = "."}
+    }
 }
 
 #if no folders, use the script operating folder.
